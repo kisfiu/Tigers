@@ -1,0 +1,9 @@
+#!/bin/sh
+#RCkill
+ps -ef | grep "smartcity" | awk '{print $2}' | xargs kill
+sleep 1
+ps -ef | grep "traffic" | awk '{print $2}' | xargs kill
+sleep 1
+ps -ef | grep "samplemyshmclient" | awk '{print $2}' | xargs kill
+sleep 1
+echo "Robocar terminal killed"

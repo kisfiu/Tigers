@@ -1,0 +1,17 @@
+#!/bin/sh
+#RCstart
+cd ~/robocar-emulator/justine/rcemu
+src/smartcity --osm=../debrecen.osm --city=Debrecen --shm=DebrecenSharedMemory --node2gps=../debrecen-lmap.txt &
+sleep 1
+src/traffic --port=10007 --shm=DebrecenSharedMemory &
+sleep 1
+cd ..
+cd rcwin
+java -jar target/site/justine-rcwin-0.0.16-jar-with-dependencies.jar ../debrecen-lmap.txt &
+sleep 1
+(sleep 1; echo "<init thugs 100 g>"; sleep 1)|telnet localhost 10007 &
+sleep 1
+cd ..
+cd rcemu
+wait 1
+src/samplemyshmclient --port=10007 --shm=DebrecenSharedMemory --team=Tigers &
